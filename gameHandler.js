@@ -6,7 +6,7 @@ const gameArea = document.querySelector('.gameArea');
 const level = document.querySelector('.level');
 
 
-window.onscroll = function() { alert("Scrolled"); };
+// window.onscroll = function() { alert("Scrolled"); };
 // loading audio files
 
 let gameStart = new Audio();
@@ -151,6 +151,20 @@ document.addEventListener('keyup', (e)=>{
 });
 
 
+// Add event listener for device orientation to handle tilt controls
+window.addEventListener('deviceorientation', handleOrientation);
+
+// Function to handle device orientation change for tilt controls
+function handleOrientation(event) {
+    // Use the gamma value to determine tilt direction and adjust the player's x position accordingly
+    const tiltSensitivity = 2; // Adjust as needed
+    player.x += event.gamma * tiltSensitivity;
+
+    // Limit the player's x position within the game area
+    const roadWidth = gameArea.offsetWidth;
+    const carWidth = carElement.offsetWidth;
+    player.x = Math.min(Math.max(player.x, 0), roadWidth - carWidth);
+}
 
 
 
